@@ -36,12 +36,67 @@
         align-items: center;
         justify-content: space-between;
     }
+
+    /* Estilo para o banner carrossel */
+    .main-banner-carousel .carousel-item img {
+        height: 400px; /* Altura do banner em desktop */
+        object-fit: cover;
+    }
+    .main-banner-carousel .carousel-caption {
+        background: linear-gradient(to top, rgba(0,0,0,0.8), rgba(0,0,0,0));
+        bottom: 0;
+        left: 0;
+        right: 0;
+        padding: 2rem;
+    }
+    .main-banner-carousel .carousel-indicators {
+        bottom: 20px;
+    }
+    .main-banner-carousel .carousel-indicators [data-bs-target] {
+        background-color: white;
+        height: 8px;
+        width: 8px;
+        border-radius: 50%;
+    }
+
+    @media (max-width: 768px) {
+        .main-banner-carousel .carousel-item img {
+            height: 250px; /* Altura menor para mobile */
+        }
+        .main-banner-carousel .carousel-caption {
+            padding: 1rem;
+        }
+        .main-banner-carousel .carousel-indicators {
+            bottom: 10px;
+        }
+    }
 </style>
 
+{{-- Novo Carrossel de Banners Full-Width --}}
+<div id="mainBannerCarousel" class="carousel slide main-banner-carousel" data-bs-ride="carousel" data-bs-interval="5000">
+    <div class="carousel-indicators">
+        @foreach($banners as $index => $banner)
+            <button type="button" data-bs-target="#mainBannerCarousel" data-bs-slide-to="{{ $index }}" @if($index === 0) class="active" aria-current="true" @endif aria-label="Slide {{ $index+1 }}"></button>
+        @endforeach
+    </div>
+    <div class="carousel-inner">
+        @foreach($banners as $index => $banner)
+            <div class="carousel-item @if($index === 0) active @endif">
+                <img src="{{ $banner['backdrop_path'] ? $bannerBase . $banner['backdrop_path'] : 'https://placehold.co/1280x720/E8E8E8/666666?text=Sem+banner' }}" class="d-block w-100" alt="{{ $banner['title'] ?? 'Sem título' }}">
+                <div class="carousel-caption d-block">
+                    <h5 class="fw-bold">{{ $banner['title'] ?? 'Sem título' }}</h5>
+                    <p>{{ \Illuminate\Support\Str::limit($banner['overview'] ?? '', 150) }}</p>
+                </div>
+            </div>
+        @endforeach
+    </div>
+</div>
+
+{{-- Conteúdo principal da página (dentro de um container para alinhamento) --}}
 <div class="container mt-5">
 
     <div class="section-title-box mb-3">
-        <h1 class="fs-4 fw-semibold mb-0">🔥 Em alta hoje</h1>
+        <h1 class="fs-4 fw-semibold mb-0"><i class="bi bi-fire"></i> Em alta</h1>
         <a href="#" class="text-danger text-decoration-none">Ver tudo</a>
     </div>
 
@@ -56,8 +111,8 @@
             @foreach($movieChunks as $chunk)
                 <div class="carousel-item @if($isFirst) active @endif">
                     {{-- A classe 'row' é responsiva:
-                         'col-6' -> 2 filmes por linha em telas pequenas (mobile)
-                         'col-md-3' -> 4 filmes por linha em telas médias e maiores --}}
+                                'col-6' -> 2 filmes por linha em telas pequenas (mobile)
+                                'col-md-3' -> 4 filmes por linha em telas médias e maiores --}}
                     <div class="row g-4">
                         @foreach($chunk as $m)
                             @php
@@ -122,9 +177,6 @@
             @endphp
             @foreach($moreRatedMoviesChunks as $chunk)
                 <div class="carousel-item @if($isFirst) active @endif">
-                    {{-- A classe 'row' é responsiva:
-                         'col-6' -> 2 filmes por linha em telas pequenas (mobile)
-                         'col-md-3' -> 4 filmes por linha em telas médias e maiores --}}
                     <div class="row g-4">
                         @foreach($chunk as $m)
                             @php
@@ -174,7 +226,6 @@
             <span class="visually-hidden">Próximo</span>
         </button>
     </div>
-
 </div>
 
 {{-- Importando Bootstrap JS --}}

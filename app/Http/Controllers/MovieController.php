@@ -13,28 +13,47 @@ class MovieController extends Controller
         if ($page < 1) $page = 1;
         if ($page > 500) $page = 500; // limite da API
 
-        $data   = $tmdb->trendingMovies('day', $page);
-        $movies = $data['results'] ?? [];
+        // Pega os filmes em alta para o carrossel principal
+        $trendingData = $tmdb->trendingMovies('day', $page);
+        $movies = $trendingData['results'] ?? [];
 
-        $allMovies = $data['results'] ?? [];
-
-        //Filtra os filmes com nota maior ou igual a 7
-        $moreRatedMovies = array_filter($allMovies, function ($allMovies) {
-            return isset($allMovies['vote_average']) && $allMovies['vote_average'] >= 7;
+        // Pega filmes mais bem avaliados para o segundo carrossel
+        $moreRatedMovies = array_filter($movies, function ($movie) {
+            return isset($movie['vote_average']) && $movie['vote_average'] >= 7;
         });
 
-        //Chunks de Melhores Avaliados
+        // Chunks de Melhores Avaliados
         $moreRatedMoviesChunks = array_chunk($moreRatedMovies, 4);
 
-        // Base de imagens p/ usar na view
+        // -- Lógica para o novo banner carrossel --
+        $nowPlayingData = $tmdb->NowPlayingMovies();
+        $upcomingData = $tmdb->UpcomingMovies();
+
+        $banners = [];
+        // Pega o primeiro filme de cada lista para usar como banner
+        if (!empty($movies)) {
+            $banners[] = $movies[0];
+        }
+        if (!empty($nowPlayingData['results'])) {
+            $banners[] = $nowPlayingData['results'][0];
+        }
+        if (!empty($upcomingData['results'])) {
+            $banners[] = $upcomingData['results'][0];
+        }
+
+        // Base de imagens para os pôsteres
         $imageBase = 'https://image.tmdb.org/t/p/w500';
 
+        // Base de imagens para os banners (maior resolução)
+        $bannerBase = 'https://image.tmdb.org/t/p/w1280';
+
         return view('pages.movies.home', compact(
-            'movies', 
-            'moreRatedMoviesChunks', 
-            'imageBase', 
+            'movies',
+            'moreRatedMoviesChunks',
+            'banners', // Passa os banners para a view
+            'imageBase',
+            'bannerBase', // Passa a base de URL para os banners
             'page'
-            )
-        );
+        ));
     }
 }
