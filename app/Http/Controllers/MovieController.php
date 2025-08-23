@@ -16,9 +16,25 @@ class MovieController extends Controller
         $data   = $tmdb->trendingMovies('day', $page);
         $movies = $data['results'] ?? [];
 
+        $allMovies = $data['results'] ?? [];
+
+        //Filtra os filmes com nota maior ou igual a 7
+        $moreRatedMovies = array_filter($allMovies, function ($allMovies) {
+            return isset($allMovies['vote_average']) && $allMovies['vote_average'] >= 7;
+        });
+
+        //Chunks de Melhores Avaliados
+        $moreRatedMoviesChunks = array_chunk($moreRatedMovies, 4);
+
         // Base de imagens p/ usar na view
         $imageBase = 'https://image.tmdb.org/t/p/w500';
 
-        return view('pages.movies.home', compact('movies', 'imageBase', 'page'));
+        return view('pages.movies.home', compact(
+            'movies', 
+            'moreRatedMoviesChunks', 
+            'imageBase', 
+            'page'
+            )
+        );
     }
 }
