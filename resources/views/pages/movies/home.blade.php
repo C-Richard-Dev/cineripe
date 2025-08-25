@@ -226,13 +226,15 @@
             <span class="visually-hidden">Próximo</span>
         </button>
     </div>
+    <br>
+    <br>
 
     {{-- FILMES DE SUPER-HERÓIS --}}
     <div class="section-title-box mb-3">
-        <h1 class="fs-4 fw-semibold mb-0"><i class="bi bi-star-fill"></i> Super-Heróis</h1>
+        <h1 class="fs-4 fw-semibold mb-0"><i class="bi bi-lightning-fill"></i> Super-Heróis</h1>
         <a href="#" class="text-danger text-decoration-none">Ver tudo</a>
     </div>
-    <div id="movieMoreRatedCarousel" class="carousel slide" data-bs-ride="carousel">
+    <div id="movieSuperHeroCarousel" class="carousel slide" data-bs-ride="carousel">
         <div class="carousel-inner">
             @php
                 $isFirst = true;
@@ -279,11 +281,11 @@
         </div>
 
         {{-- Controles de navegação do carrossel --}}
-        <button class="carousel-control-prev" type="button" data-bs-target="#movieMoreRatedCarousel" data-bs-slide="prev">
+        <button class="carousel-control-prev" type="button" data-bs-target="#movieSuperHeroCarousel" data-bs-slide="prev">
             <span class="carousel-control-prev-icon" aria-hidden="true"></span>
             <span class="visually-hidden">Anterior</span>
         </button>
-        <button class="carousel-control-next" type="button" data-bs-target="#movieMoreRatedCarousel" data-bs-slide="next">
+        <button class="carousel-control-next" type="button" data-bs-target="#movieSuperHeroCarousel" data-bs-slide="next">
             <span class="carousel-control-next-icon" aria-hidden="true"></span>
             <span class="visually-hidden">Próximo</span>
         </button>
