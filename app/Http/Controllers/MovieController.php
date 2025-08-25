@@ -21,9 +21,13 @@ class MovieController extends Controller
         $moreRatedMovies = array_filter($movies, function ($movie) {
             return isset($movie['vote_average']) && $movie['vote_average'] >= 7;
         });
-
         // Chunks de Melhores Avaliados
         $moreRatedMoviesChunks = array_chunk($moreRatedMovies, 4);
+
+        // Pega filmes de superherois para o terceiro carrossel
+        $superheroData = $tmdb->superHeroMovies($page);
+        $superHeroMovies = $superheroData['results'] ?? [];
+        $superHeroMoviesChunks = array_chunk($superHeroMovies, 4);
 
         // -- Lógica para o novo banner carrossel --
         $nowPlayingData = $tmdb->NowPlayingMovies();
@@ -50,6 +54,7 @@ class MovieController extends Controller
         return view('pages.movies.home', compact(
             'movies',
             'moreRatedMoviesChunks',
+            'superHeroMoviesChunks',
             'banners', // Passa os banners para a view
             'imageBase',
             'bannerBase', // Passa a base de URL para os banners

@@ -80,12 +80,35 @@ class TmdbService
                 'language'       => $this->lang(),
                 'include_adult'  => true,
                 'page'           => $page,
-                'tmdb'           => ['key' => env('TMDB_API_KEY'),], // Fazendo isso para evitar erro de CORS
             ]);
 
             return $res->successful() ? $res->json() : ['results' => []];
         });
     }
+
+
+    /**
+     * Pega filmes de super-heróis
+     */
+    public function superheroMovies(string $window = 'day', int $page = 1): array
+    {
+        $cacheKey = "tmdb.superhero.page.$page.{$this->lang()}";
+
+        return Cache::remember($cacheKey, now()->addMinutes(60), function () use ($page) {
+            $res = Http::get("{$this->api}/discover/movie", [
+                'page'          => $page,
+                'language'      => $this->lang(),
+                'api_key'       => $this->key(),
+                'with_keywords' => 9715, // super-herói
+                'sort_by'       => 'popularity.desc',
+                'include_adult' => false,
+            ]);
+
+            return $res->successful() ? $res->json() : ['results' => []];
+        });
+    }
+
+
 
     /** Imagem do poster/backdrop */
     public function imageUrl(?string $path, string $size = 'w500'): ?string
@@ -94,17 +117,26 @@ class TmdbService
         return "{$this->img}/{$size}{$path}";
     }
 
+
+
+
     // Filmes em exibição (Now Playing)
     public function nowPlayingMovies($page = 1)
     {
         return $this->get('movie/now_playing', ['page' => $page]);
     }
 
+
+
+
     // Filmes futuros (Upcoming)
     public function upcomingMovies($page = 1)
     {
         return $this->get('movie/upcoming', ['page' => $page]);
     }
+
+
+    
 
     // Todos os filmes populares (Popular)
     public function allMovies($page = 1)
