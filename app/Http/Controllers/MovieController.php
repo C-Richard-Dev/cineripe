@@ -29,6 +29,11 @@ class MovieController extends Controller
         $superHeroMovies = $superheroData['results'] ?? [];
         $superHeroMoviesChunks = array_chunk($superHeroMovies, 4);
 
+        // Pega filmes de romance para o quarto carrossel
+        $romanceData = $tmdb->romanceMovies($page);
+        $romanceMovies = $romanceData['results'] ?? [];
+        $romanceMoviesChunks = array_chunk($romanceMovies, 4); 
+
         // -- Lógica para o novo banner carrossel --
         $nowPlayingData = $tmdb->NowPlayingMovies();
         $upcomingData = $tmdb->UpcomingMovies();
@@ -55,6 +60,7 @@ class MovieController extends Controller
             'movies',
             'moreRatedMoviesChunks',
             'superHeroMoviesChunks',
+            'romanceMoviesChunks',
             'banners', // Passa os banners para a view
             'imageBase',
             'bannerBase', // Passa a base de URL para os banners

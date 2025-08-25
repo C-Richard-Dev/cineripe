@@ -109,6 +109,28 @@ class TmdbService
     }
 
 
+    /**
+     * Pega filmes de romance
+     */
+    public function romanceMovies(int $page = 1): array
+    {
+        $cacheKey = "tmdb.romance.page.$page.{$this->lang()}";
+
+        return Cache::remember($cacheKey, now()->addMinutes(60), function () use ($page) {
+            $res = Http::get("{$this->api}/discover/movie", [
+                'page'          => $page,
+                'language'      => $this->lang(),
+                'api_key'       => $this->key(),
+                'with_genres'   => 10749, // Gênero Romance
+                'sort_by'       => 'popularity.desc',
+                'include_adult' => false,
+            ]);
+
+            return $res->successful() ? $res->json() : ['results' => []];
+        });
+    }
+
+
 
     /** Imagem do poster/backdrop */
     public function imageUrl(?string $path, string $size = 'w500'): ?string
