@@ -97,7 +97,7 @@
 
     <div class="section-title-box mb-3">
         <h1 class="fs-4 fw-semibold mb-0"><i class="bi bi-fire"></i> Em alta</h1>
-        <a href="#" class="text-danger text-decoration-none">Ver tudo</a>
+        <a href="" class="text-danger text-decoration-none">Ver tudo</a>
     </div>
 
     {{-- Carrossel de filmes com Bootstrap --}}
@@ -122,7 +122,7 @@
                                 $rating = $m['vote_average'] ?? null;
                             @endphp
                             <div class="col-6 col-md-3">
-                                <a href="#" class="text-decoration-none">
+                                <a href="{{route('movie.details', ['movie'=>$m['id']])}}" class="text-decoration-none">
                                     <div class="card h-100 shadow-sm border-0 rounded-3 overflow-hidden">
                                         <div class="position-relative">
                                             @if($poster)
@@ -168,7 +168,7 @@
     {{-- FILMES MAIS BEM AVALIADOS --}}
     <div class="section-title-box mb-3">
         <h1 class="fs-4 fw-semibold mb-0"><i class="bi bi-star-fill"></i> Mais bem avaliados</h1>
-        <a href="#" class="text-danger text-decoration-none">Ver tudo</a>
+        <a href="" class="text-danger text-decoration-none">Ver tudo</a>
     </div>
     <div id="movieMoreRatedCarousel" class="carousel slide" data-bs-ride="carousel">
         <div class="carousel-inner">
@@ -186,7 +186,7 @@
                                 $rating = $m['vote_average'] ?? null;
                             @endphp
                             <div class="col-6 col-md-3">
-                                <a href="#" class="text-decoration-none">
+                                <a href="{{route('movie.details', ['movie'=>$m['id']])}}" class="text-decoration-none">
                                     <div class="card h-100 shadow-sm border-0 rounded-3 overflow-hidden">
                                         <div class="position-relative">
                                             @if($poster)
@@ -232,7 +232,7 @@
     {{-- FILMES DE SUPER-HERÓIS --}}
     <div class="section-title-box mb-3">
         <h1 class="fs-4 fw-semibold mb-0"><i class="bi bi-lightning-fill"></i> Super-Heróis</h1>
-        <a href="#" class="text-danger text-decoration-none">Ver tudo</a>
+        <a href="" class="text-danger text-decoration-none">Ver tudo</a>
     </div>
     <div id="movieSuperHeroCarousel" class="carousel slide" data-bs-ride="carousel">
         <div class="carousel-inner">
@@ -250,7 +250,7 @@
                                 $rating = $m['vote_average'] ?? null;
                             @endphp
                             <div class="col-6 col-md-3">
-                                <a href="#" class="text-decoration-none">
+                                <a href="{{route('movie.details', ['movie'=>$m['id']])}}" class="text-decoration-none">
                                     <div class="card h-100 shadow-sm border-0 rounded-3 overflow-hidden">
                                         <div class="position-relative">
                                             @if($poster)
@@ -297,7 +297,7 @@
     {{-- FILMES DE ROMANCE --}}
     <div class="section-title-box mb-3">
         <h1 class="fs-4 fw-semibold mb-0"><i class="bi bi-heart-fill"></i> Romance</h1>
-        <a href="#" class="text-danger text-decoration-none">Ver tudo</a>
+        <a href="" class="text-danger text-decoration-none">Ver tudo</a>
     </div>
     <div id="movieRomanceCarousel" class="carousel slide" data-bs-ride="carousel">
         <div class="carousel-inner">
@@ -315,7 +315,7 @@
                                 $rating = $m['vote_average'] ?? null;
                             @endphp
                             <div class="col-6 col-md-3">
-                                <a href="#" class="text-decoration-none">
+                                <a href="{{route('movie.details', ['movie'=>$m['id']])}}" class="text-decoration-none">
                                     <div class="card h-100 shadow-sm border-0 rounded-3 overflow-hidden">
                                         <div class="position-relative">
                                             @if($poster)
@@ -361,7 +361,7 @@
     {{-- FILMES DE Anime --}}
     <div class="section-title-box mb-3">
         <h1 class="fs-4 fw-semibold mb-0"><i class="bi bi-browser-firefox"></i> Animes</h1>
-        <a href="#" class="text-danger text-decoration-none">Ver tudo</a>
+        <a href="" class="text-danger text-decoration-none">Ver tudo</a>
     </div>
     <div id="movieAnimeCarousel" class="carousel slide" data-bs-ride="carousel">
         <div class="carousel-inner">
@@ -379,7 +379,7 @@
                                 $rating = $m['vote_average'] ?? null;
                             @endphp
                             <div class="col-6 col-md-3">
-                                <a href="#" class="text-decoration-none">
+                                <a href="{{route('movie.details', ['movie'=>$m['id']])}}" class="text-decoration-none">
                                     <div class="card h-100 shadow-sm border-0 rounded-3 overflow-hidden">
                                         <div class="position-relative">
                                             @if($poster)
@@ -425,7 +425,7 @@
     {{-- FILMES DE COMÉDIA --}}
     <div class="section-title-box mb-3">
         <h1 class="fs-4 fw-semibold mb-0"><i class="bi bi-emoji-grin-fill"></i> Comédia</h1>
-        <a href="#" class="text-danger text-decoration-none">Ver tudo</a>
+        <a href="" class="text-danger text-decoration-none">Ver tudo</a>
     </div>
     <div id="movieComedyCarousel" class="carousel slide" data-bs-ride="carousel">
         <div class="carousel-inner">
@@ -443,7 +443,7 @@
                                 $rating = $m['vote_average'] ?? null;
                             @endphp
                             <div class="col-6 col-md-3">
-                                <a href="#" class="text-decoration-none">
+                                <a href="{{route('movie.details', ['movie'=>$m['id']])}}" class="text-decoration-none">
                                     <div class="card h-100 shadow-sm border-0 rounded-3 overflow-hidden">
                                         <div class="position-relative">
                                             @if($poster)

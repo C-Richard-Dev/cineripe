@@ -18,6 +18,13 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [MovieController::class, 'index'])->name('home');
 
+/**
+ * Gerenciamento de Filmes
+ */
+Route::prefix('movie')->group(function () {
+    Route::get('/details/{movie}', [MovieController::class, 'details'])->name('movie.details'); // exibe detalhes de um filme
+});
+
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');

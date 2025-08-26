@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Services\TmdbService;
+use Illuminate\Support\Facades\Http;
 
 class MovieController extends Controller
 {
@@ -78,5 +79,33 @@ class MovieController extends Controller
             'bannerBase', // Passa a base de URL para os banners
             'page'
         ));
+    }
+
+
+
+    public function details (int $movie){
+        // Chave e API base
+        $apiKey = config('services.tmdb.key'); // coloca tua chave em config/services.php
+        $apiUrl = "https://api.themoviedb.org/3/movie/{$movie}";
+
+        // Request para pegar detalhes
+        $res = Http::get($apiUrl, [
+            'api_key'  => $apiKey,
+            'language' => 'pt-BR', // ou usa $this->lang()
+            'append_to_response' => 'videos,credits', //traz trailers e elenco
+        ]);
+
+        // if (!$res->successful()) {
+        //     dd($res->status(), $res->body());
+        // }
+
+        // Se falhar, redireciona
+        if (!$res->successful()) {
+            abort(404, 'Filme não encontrado');
+        }
+
+        $movie = $res->json();
+
+        return view('pages.movies.details', compact('movie'));
     }
 }
