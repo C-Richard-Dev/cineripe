@@ -131,6 +131,7 @@ class TmdbService
     }
 
 
+
     /**
      * Pega animes (Filmes)
      */
@@ -145,6 +146,29 @@ class TmdbService
                 'api_key'       => $this->key(),
                 'with_keywords' => 210024, // keyword: anime
                 'with_genres'   => 16,     // gênero: animação
+                'sort_by'       => 'popularity.desc',
+                'include_adult' => false,
+            ]);
+
+            return $res->successful() ? $res->json() : ['results' => []];
+        });
+    }
+    
+
+
+    /**
+     * Pega filmes de comédia
+     */
+    public function comedyMovies(int $page = 1): array
+    {
+        $cacheKey = "tmdb.comedy.page.$page.{$this->lang()}";
+
+        return Cache::remember($cacheKey, now()->addMinutes(60), function () use ($page) {
+            $res = Http::get("{$this->api}/discover/movie", [
+                'page'          => $page,
+                'language'      => $this->lang(),
+                'api_key'       => $this->key(),
+                'with_genres'   => 35,     // gênero: comédia
                 'sort_by'       => 'popularity.desc',
                 'include_adult' => false,
             ]);
