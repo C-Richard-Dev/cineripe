@@ -131,6 +131,29 @@ class TmdbService
     }
 
 
+    /**
+     * Pega animes (Filmes)
+     */
+    public function animeMovies(int $page = 1): array
+    {
+        $cacheKey = "tmdb.anime.page.$page.{$this->lang()}";
+
+        return Cache::remember($cacheKey, now()->addMinutes(60), function () use ($page) {
+            $res = Http::get("{$this->api}/discover/movie", [
+                'page'          => $page,
+                'language'      => $this->lang(),
+                'api_key'       => $this->key(),
+                'with_keywords' => 210024, // keyword: anime
+                'with_genres'   => 16,     // gênero: animação
+                'sort_by'       => 'popularity.desc',
+                'include_adult' => false,
+            ]);
+
+            return $res->successful() ? $res->json() : ['results' => []];
+        });
+    }
+
+
 
     /** Imagem do poster/backdrop */
     public function imageUrl(?string $path, string $size = 'w500'): ?string
