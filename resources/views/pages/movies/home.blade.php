@@ -2,8 +2,7 @@
 
 @section('content')
 
-{{-- Importando Bootstrap CSS --}}
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" xintegrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+
 <!-- Bootstrap Icons -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 
@@ -31,8 +30,11 @@
 {{-- Conteúdo principal da página (dentro de um container para alinhamento) --}}
 <div class="container mt-5">
 
-    <div class="section-title-box mb-3">
-        <h1 class="fs-4 fw-semibold mb-0"><i class="bi bi-fire"></i> Em alta</h1>
+    <div class="bg-white rounded-4 shadow-sm d-flex align-items-center justify-content-between p-3 mb-3">
+        {{-- A classe 'mb-0' remove a margem inferior padrão do h1 para não bagunçar o layout flexbox --}}
+        <h1 class="text-dark mb-0">
+            <i class="bi bi-fire"></i> Em alta
+        </h1>
         <a href="" class="text-danger text-decoration-none">Ver tudo</a>
     </div>
 
@@ -102,8 +104,8 @@
     <br>
 
     {{-- FILMES MAIS BEM AVALIADOS --}}
-    <div class="section-title-box mb-3">
-        <h1 class="fs-4 fw-semibold mb-0"><i class="bi bi-star-fill"></i> Mais bem avaliados</h1>
+    <div class="bg-white rounded-4 shadow-sm d-flex align-items-center justify-content-between p-3 mb-3">
+        <h1 class="text-dark mb-0"><i class="bi bi-star-fill"></i> Mais bem avaliados</h1>
         <a href="" class="text-danger text-decoration-none">Ver tudo</a>
     </div>
     <div id="movieMoreRatedCarousel" class="carousel slide" data-bs-ride="carousel">
@@ -166,8 +168,8 @@
     <br>
 
     {{-- FILMES DE SUPER-HERÓIS --}}
-    <div class="section-title-box mb-3">
-        <h1 class="fs-4 fw-semibold mb-0"><i class="bi bi-lightning-fill"></i> Super-Heróis</h1>
+    <div class="bg-white rounded-4 shadow-sm d-flex align-items-center justify-content-between p-3 mb-3">
+        <h1 class="text-dark mb-0"><i class="bi bi-lightning-fill"></i> Super-Heróis</h1>
         <a href="" class="text-danger text-decoration-none">Ver tudo</a>
     </div>
     <div id="movieSuperHeroCarousel" class="carousel slide" data-bs-ride="carousel">
@@ -231,8 +233,8 @@
 
 
     {{-- FILMES DE ROMANCE --}}
-    <div class="section-title-box mb-3">
-        <h1 class="fs-4 fw-semibold mb-0"><i class="bi bi-heart-fill"></i> Romance</h1>
+    <div class="bg-white rounded-4 shadow-sm d-flex align-items-center justify-content-between p-3 mb-3">
+        <h1 class="text-dark mb-0"><i class="bi bi-heart-fill"></i> Romance</h1>
         <a href="" class="text-danger text-decoration-none">Ver tudo</a>
     </div>
     <div id="movieRomanceCarousel" class="carousel slide" data-bs-ride="carousel">
@@ -295,8 +297,8 @@
     <br>
 
     {{-- FILMES DE Anime --}}
-    <div class="section-title-box mb-3">
-        <h1 class="fs-4 fw-semibold mb-0"><i class="bi bi-browser-firefox"></i> Animes</h1>
+    <div class="bg-white rounded-4 shadow-sm d-flex align-items-center justify-content-between p-3 mb-3">
+        <h1 class="text-dark mb-0"><i class="bi bi-browser-firefox"></i> Animes</h1>
         <a href="" class="text-danger text-decoration-none">Ver tudo</a>
     </div>
     <div id="movieAnimeCarousel" class="carousel slide" data-bs-ride="carousel">
@@ -359,8 +361,8 @@
     <br>
 
     {{-- FILMES DE COMÉDIA --}}
-    <div class="section-title-box mb-3">
-        <h1 class="fs-4 fw-semibold mb-0"><i class="bi bi-emoji-grin-fill"></i> Comédia</h1>
+    <div class="bg-white rounded-4 shadow-sm d-flex align-items-center justify-content-between p-3 mb-3">
+        <h1 class="text-dark mb-0"><i class="bi bi-emoji-grin-fill"></i> Comédia</h1>
         <a href="" class="text-danger text-decoration-none">Ver tudo</a>
     </div>
     <div id="movieComedyCarousel" class="carousel slide" data-bs-ride="carousel">

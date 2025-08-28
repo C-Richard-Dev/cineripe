@@ -19,6 +19,10 @@ body {
     background-color: var(--secondary-color);
 }
 
+h1{
+    color: red;
+}
+
 /*
  * Classes Reutilizáveis
  */
@@ -90,8 +94,9 @@ body {
     justify-content: space-between;
 }
 
+/* Ajuste a altura do banner aqui para telas maiores */
 .main-banner-carousel .carousel-item img {
-    height: 400px;
+    height: 100px; /* Reduzi de 400px para um tamanho intermediário */
     object-fit: cover;
 }
 .main-banner-carousel .carousel-caption {
@@ -111,9 +116,10 @@ body {
     border-radius: 50%;
 }
 
+/* Ajuste a altura do banner aqui para telas menores */
 @media (max-width: 768px) {
     .main-banner-carousel .carousel-item img {
-        height: 250px;
+        height: 200px; /* Reduzi de 250px para um tamanho intermediário */
     }
     .main-banner-carousel .carousel-caption {
         padding: 1rem;
