@@ -23,6 +23,55 @@
 </head>
 <body class="bg-dark">
 
+    {{-- Popup Sucesso --}}
+    @if(session('success'))
+    <div class="modal fade show" id="successModal" tabindex="-1" aria-labelledby="successModalLabel" aria-modal="true" style="display: block;">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content text-center">
+        <div class="modal-header bg-success text-white">
+            <h5 class="modal-title" id="successModalLabel">Sucesso!</h5>
+        </div>
+        <div class="modal-body">
+            <p>{{ session('success') }}</p>
+            <div class="fs-1 mt-3">🙂</div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-success" data-bs-dismiss="modal">Confirmar</button>
+        </div>
+        </div>
+    </div>
+    </div>
+    <script>
+        var successModal = new bootstrap.Modal(document.getElementById('successModal'));
+        successModal.show();
+    </script>
+    @endif
+
+    {{-- Popup Erro --}}
+    @if(session('error'))
+    <div class="modal fade show" id="errorModal" tabindex="-1" aria-labelledby="errorModalLabel" aria-modal="true" style="display: block;">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content text-center">
+        <div class="modal-header bg-danger text-white">
+            <h5 class="modal-title" id="errorModalLabel">Erro!</h5>
+        </div>
+        <div class="modal-body">
+            <p>{{ session('error') }}</p>
+            <div class="fs-1 mt-3">🙁</div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Confirmar</button>
+        </div>
+        </div>
+    </div>
+    </div>
+    <script>
+        var errorModal = new bootstrap.Modal(document.getElementById('errorModal'));
+        errorModal.show();
+    </script>
+    @endif
+
+
     @include('layouts.navigation') {{-- adapte a navigation sem Tailwind --}}
 
     <!-- Page Heading -->
