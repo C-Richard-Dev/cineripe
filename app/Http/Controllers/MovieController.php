@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Services\TmdbService;
+use App\Models\Rating;
 use Illuminate\Support\Facades\Http;
 
 class MovieController extends Controller
@@ -95,6 +96,8 @@ class MovieController extends Controller
             'append_to_response' => 'videos,credits', //traz trailers e elenco
         ]);
 
+        $ratings = Rating::where('tmdb_id', $movie)->get();
+
         // if (!$res->successful()) {
         //     dd($res->status(), $res->body());
         // }
@@ -106,6 +109,6 @@ class MovieController extends Controller
 
         $movie = $res->json();
 
-        return view('pages.movies.details', compact('movie'));
+        return view('pages.movies.details', compact('movie', 'ratings'));
     }
 }

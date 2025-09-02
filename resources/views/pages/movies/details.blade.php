@@ -51,6 +51,20 @@
     }
 </style>
 
+<style>
+    .star {
+        font-size: 2rem;
+        color: #ddd;
+        cursor: pointer;
+        transition: color 0.2s;
+    }
+    input[type="radio"]:checked ~ label,
+    label:hover,
+    label:hover ~ label {
+        color: gold;
+    }
+</style>
+
 <div class="container my-5">
     {{-- Botão de voltar no canto superior esquerdo --}}
     <a href="{{ route('home') }}" class="btn-voltar-custom mb-4">
@@ -71,7 +85,7 @@
             <div class="details-card p-4 rounded">
                 <h1 class="card-title fw-bold" style="color: black;">{{ $movie['title'] }}</h1>
                 <p class="card-text text-secondary">
-                    <strong>Nota:</strong> <span style="color: #ff0000;">⭐ {{ $movie['vote_average'] }}</span> | <strong>Data de Lançamento:</strong> {{ $movie['release_date'] }}
+                    <strong>Nota:</strong> <span style="color: #ff0000;">⭐ {{ $movie['vote_average'] }}</span> | <strong>Data de Lançamento:</strong> {{ \Carbon\Carbon::parse($movie['release_date'])->format('d/m/Y') }}
                 </p>
                 <hr>
                 <p class="text-secondary">{{ $movie['overview'] }}</p>
@@ -109,7 +123,42 @@
             </iframe>
         </div>
     @endif
-</div>
 
+    <div class="mt-5 text-center">
+        <div class="bg-white rounded-4 shadow-sm d-flex align-items-center justify-content-between p-3 mb-3">
+            <h1 class="text-dark mb-0">
+                Avaliações 
+            </h1>
+        </div>
+        @if (Auth::check())
+            <div>
+                <button data-bs-toggle="modal" data-bs-target="#avaliacaoModal" class="btn btn-custom mb-3">
+                    Adicionar Avaliação
+                </button>
+            </div>
+        @else
+            <div>
+                <a href="" class="btn btn-primary mb-3">
+                    Crie uma conta para adicionar uma avaliação!
+                </a>
+            </div>
+        @endif
+        @forelse ($ratings as $rating)
+            <div class="card mb-3">
+                <div class="card-body">
+                    <h5 class="card-title">{{ $rating->user->name }}</h5>
+                    <p class="card-text">{{ $rating->rating }}</p>
+                    <p class="card-text">{{ $rating->comment }}</p>
+                </div>
+            </div>
+        @empty
+            <div class="alert alert-info" role="alert">
+                Nenhuma avaliação disponível para este filme.
+            </div>
+        @endforelse
+    </div>
+</div>
+{{-- Incluindo os modais --}}
+@include('pages.movies.modals')
 @endsection
 
