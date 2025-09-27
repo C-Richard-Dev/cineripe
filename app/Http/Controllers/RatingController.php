@@ -11,7 +11,7 @@ class RatingController extends Controller
     /**
      * Função de avaliação de filme (por usuários autenticados)
      */
-    public function rate(Request $request, int $movie){
+    public function store(Request $request, int $movie){
         $data = $request->validate([
             'rating' => 'required|numeric|min:0.5|max:10',
             'comment' => 'nullable|string|max:1000',
