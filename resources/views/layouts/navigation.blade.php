@@ -23,6 +23,26 @@
                 </li>
             </ul>
 
+            <form class="d-flex me-3 position-relative" id="movieSearchForm" action="{{ route('movies.search') }}" method="GET">
+                <input 
+                    class="form-control" 
+                    type="search" 
+                    placeholder="Buscar filmes..." 
+                    aria-label="Search" 
+                    id="movieSearchInput"
+                    name="q"
+                    autocomplete="off"
+                >
+                <button class="btn btn-danger ms-2" type="submit">
+                    <i class="bi bi-search"></i> {{-- ícone bootstrap-icons --}}
+                </button>
+
+                <!-- Dropdown de sugestões -->
+                <ul class="list-group position-absolute w-100 mt-5 shadow" id="suggestionsBox" style="z-index: 1050; display:none;">
+                    <!-- As sugestões AJAX vão entrar aqui -->
+                </ul>
+            </form>
+
             <!-- Right Side -->
             <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                 @auth
@@ -52,3 +72,42 @@
         </div>
     </div>
 </nav>
+
+<script>
+    fetch(`/movies/suggestions?q=${query}`)
+    .then(response => response.json())
+    .then(data => {
+        suggestionsBox.innerHTML = "";
+        if (data.length > 0) {
+            data.forEach(movie => {
+                let item = document.createElement("li");
+                item.classList.add("list-group-item", "list-group-item-action", "d-flex", "align-items-center");
+
+                if (movie.poster) {
+                    let img = document.createElement("img");
+                    img.src = movie.poster;
+                    img.classList.add("me-2");
+                    img.style.width = "40px";
+                    img.style.height = "60px";
+                    item.appendChild(img);
+                }
+
+                let span = document.createElement("span");
+                span.textContent = movie.title;
+                item.appendChild(span);
+
+                item.addEventListener("click", function () {
+                    input.value = movie.title;
+                    suggestionsBox.style.display = "none";
+                    document.getElementById("movieSearchForm").submit();
+                });
+
+                suggestionsBox.appendChild(item);
+            });
+            suggestionsBox.style.display = "block";
+        } else {
+            suggestionsBox.style.display = "none";
+        }
+    });
+
+</script>

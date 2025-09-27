@@ -111,4 +111,62 @@ class MovieController extends Controller
 
         return view('pages.movies.details', compact('movie', 'ratings'));
     }
+
+
+    
+    public function suggestions(Request $request)
+        {
+            $query = $request->get('q');
+            if (!$query) {
+                return response()->json([]);
+            }
+
+            $apiKey = config('services.tmdb.key');
+
+            $response = Http::get("https://api.themoviedb.org/3/search/movie", [
+                'api_key' => $apiKey,
+                'language' => 'pt-BR',
+                'query' => $query,
+                'page' => 1,
+            ]);
+
+            if (!$response->successful()) {
+                return response()->json([]);
+            }
+
+            $movies = collect($response->json('results'))
+                        ->take(5) // só 5 sugestões
+                        ->map(function ($movie) {
+                            return [
+                                'id' => $movie['id'],
+                                'title' => $movie['title'],
+                                'poster' => $movie['poster_path']
+                                    ? "https://image.tmdb.org/t/p/w92".$movie['poster_path']
+                                    : null,
+                            ];
+                        });
+
+            return response()->json($movies);
+        }
+
+    public function search(Request $request)
+    {
+        $query = $request->get('q');
+        $apiKey = config('services.tmdb.key');
+
+        $response = Http::get("https://api.themoviedb.org/3/search/movie", [
+            'api_key' => $apiKey,
+            'language' => 'pt-BR',
+            'query' => $query,
+            'page' => 1,
+        ]);
+
+        if (!$response->successful()) {
+            abort(500, 'Erro ao buscar filmes');
+        }
+
+        $movies = $response->json('results');
+
+        return view('pages.movies.results', compact('movies', 'query'));
+    }
 }
