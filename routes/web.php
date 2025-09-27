@@ -37,8 +37,9 @@ Route::middleware('auth', 'admin')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
+    // Avaliação de filmes
     Route::prefix('ratings')->group(function () {
-        Route::post('/rate/{movie}', [RatingController::class, 'rate'])->name('rate.store'); // avalia um filme (usuários autenticados)
+        Route::post('/rate/{movie}', [RatingController::class, 'store'])->name('rate.store'); // avalia um filme (usuários autenticados)
     });
 });
 

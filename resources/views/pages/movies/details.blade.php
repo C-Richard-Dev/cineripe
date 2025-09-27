@@ -144,11 +144,25 @@
             </div>
         @endif
         @forelse ($ratings as $rating)
-            <div class="card mb-3">
-                <div class="card-body">
-                    <h5 class="card-title">{{ $rating->user->name }}</h5>
-                    <p class="card-text">{{ $rating->rating }}</p>
-                    <p class="card-text">{{ $rating->comment }}</p>
+            <div class="card mb-3 shadow-sm border-0 w-75">
+                <div class="card-body d-flex">
+                    {{-- Avatar inicial do usuário (primeira letra do nome) --}}
+                    <div class="rounded-circle bg-danger text-white d-flex align-items-center justify-content-center me-3" style="width:50px; height:50px; font-size:20px;">
+                        {{ strtoupper(substr($rating->user->name, 0, 1)) }}
+                    </div>
+
+                    <div class="flex-grow-1">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <h6 class="mb-0 fw-bold">{{ $rating->user->name }}</h6>
+                            <span class="badge bg-danger fs-6">{{ $rating->rating }}/10</span>
+                        </div>
+                        <p class="mt-2 mb-0 text-muted" style="white-space: pre-line;">
+                            {{ $rating->comment }}
+                        </p>
+                        <small class="text-secondary">
+                            {{ $rating->created_at->diffForHumans() }}
+                        </small>
+                    </div>
                 </div>
             </div>
         @empty
@@ -156,6 +170,7 @@
                 Nenhuma avaliação disponível para este filme.
             </div>
         @endforelse
+
     </div>
 </div>
 {{-- Incluindo os modais --}}
