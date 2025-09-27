@@ -25,8 +25,6 @@ Route::get('/', [MovieController::class, 'index'])->name('home');
 Route::prefix('movie')->group(function () {
     Route::get('/details/{movie}', [MovieController::class, 'details'])->name('movie.details'); // exibe detalhes de um filme
     Route::get('/movies/search', [MovieController::class, 'search'])->name('movies.search');
-    Route::get('/movies/suggestions', [MovieController::class, 'suggestions'])->name('movies.suggestions');
-
 });
 
 Route::get('/dashboard', function () {
