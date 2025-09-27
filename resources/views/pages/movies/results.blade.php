@@ -21,7 +21,7 @@
                         <p class="card-text">
                             {{ Str::limit($movie['overview'] ?? 'Sem descrição', 100) }}
                         </p>
-                        <a href="" class="btn btn-danger w-100">
+                        <a href="{{route('movie.details', ['movie'=>$movie['id']])}}" class="btn btn-danger w-100">
                             Ver detalhes
                         </a>
                     </div>
