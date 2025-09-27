@@ -28,7 +28,8 @@ class AuthenticatedSessionController extends Controller
         $request->authenticate();
 
         $request->session()->regenerate();
-
+        // se o tipo do usuario autenticado for comum, redireciona para home, senão, vai para o painel
+        // administrativo.
         if (Auth::user()->type == 'user'){
             return redirect()->route('home')->with('success', 'Você foi logado com sucesso!');
         } else {

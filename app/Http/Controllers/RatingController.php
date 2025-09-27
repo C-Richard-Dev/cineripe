@@ -41,7 +41,9 @@ class RatingController extends Controller
         }
     }
 
-
+    /**
+     * Atualiza avaliação do usuário (Com verificações se quem esta excluindo é quem criou a avaliação)
+     */
     public function update(Request $request, $rating){
         $data = $request->validate([
             'rating' => 'required|numeric|min:0.5|max:10',
@@ -55,7 +57,7 @@ class RatingController extends Controller
             'comment.max' => 'O comentário não pode exceder 1000 caracteres.',
         ]);
         $rating = Rating::findOrFail($rating);
-        if ($rating->user !== Auth::id()){
+        if ($rating->user_id !== Auth::id()){
             return redirect()->back()->with('error', 'Você não tem permissão para editar esse comentário!');
         }
         try{
@@ -73,7 +75,7 @@ class RatingController extends Controller
 
     public function destroy($rating){
         $rating = Rating::findOrFail($rating);
-        if ($rating->user !== Auth::id()){
+        if ($rating->user_id !== Auth::id()){
             return redirect()->back()->with('error', 'Você não tem permissão para apagar esse comentário!');
         }
         try{

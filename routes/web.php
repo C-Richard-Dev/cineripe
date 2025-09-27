@@ -27,20 +27,25 @@ Route::prefix('movie')->group(function () {
     Route::get('/movies/search', [MovieController::class, 'search'])->name('movies.search');
 });
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
-
-
 // Rotas protegidas por autenticação
-Route::middleware('auth', 'admin')->group(function () {
+Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
     // Avaliação de filmes
     Route::prefix('ratings')->group(function () {
         Route::post('/rate/{movie}', [RatingController::class, 'store'])->name('rate.store'); // avalia um filme (usuários autenticados)
+        Route::delete('/destroy/{rating}', [RatingController::class, 'destroy'])->name('rate.destroy'); // apaga avaliação
+        Route::put('/update/{rating}', [RatingController::class, 'update'])->name('rate.update'); // edita avaliação
+    });
+    /**
+     * Somente usuários do tipo Admin
+     */
+    Route::middleware('auth', 'admin')->group(function(){
+        Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy'); // apaga um perfil
+        Route::get('/dashboard', function () {
+            return view('dashboard');
+        })->middleware(['auth', 'verified'])->name('dashboard'); // redireciona para dashboard
     });
 });
 

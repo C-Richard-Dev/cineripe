@@ -144,17 +144,18 @@
             </div>
         @endif
         @forelse ($ratings as $rating)
-            <div class="card mb-3 shadow-sm border-0 w-75">
+            <div class="card mb-3 shadow-sm border-0 w-75 position-relative">
                 <div class="card-body d-flex">
                     {{-- Avatar inicial do usuário (primeira letra do nome) --}}
-                    <div class="rounded-circle bg-danger text-white d-flex align-items-center justify-content-center me-3" style="width:50px; height:50px; font-size:20px;">
+                    <div class="rounded-circle bg-danger text-white d-flex align-items-center justify-content-center me-3" 
+                        style="width:50px; height:50px; font-size:20px;">
                         {{ strtoupper(substr($rating->user->name, 0, 1)) }}
                     </div>
 
                     <div class="flex-grow-1">
                         <div class="d-flex justify-content-between align-items-center">
                             <h6 class="mb-0 fw-bold">{{ $rating->user->name }}</h6>
-                            <span class="badge bg-danger fs-6">{{ $rating->rating }}/10</span>
+                            <span class="badge bg-danger fs-6">{{ $rating->rating }}/5</span>
                         </div>
                         <p class="mt-2 mb-0 text-muted" style="white-space: pre-line;">
                             {{ $rating->comment }}
@@ -164,12 +165,112 @@
                         </small>
                     </div>
                 </div>
+
+                {{-- Botões de ação somente para o autor da avaliação --}}
+                @if(Auth::check() && Auth::id() === $rating->user_id)
+                    <div class="position-absolute bottom-0 end-0 m-2 d-flex gap-2">
+                        {{-- Botão Editar (abre modal de edição futuramente) --}}
+                        <button class="btn btn-sm btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#editRatingModal-{{ $rating->id }}">
+                            <i class="bi bi-pencil"></i>
+                        </button>
+
+                        {{-- Botão Excluir --}}
+                        <button class="btn btn-sm btn-outline-danger" data-bs-toggle="modal" data-bs-target="#deleteRatingModal-{{ $rating->id }}">
+                            <i class="bi bi-x-lg"></i>
+                        </button>
+                    </div>
+                @endif
             </div>
+            {{-- Modal de Exclusão --}}
+            <div class="modal fade" id="deleteRatingModal-{{ $rating->id }}" tabindex="-1" aria-labelledby="deleteRatingModalLabel-{{ $rating->id }}" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content border-0 shadow-lg rounded-4">
+                        <div class="modal-header bg-danger text-white rounded-top-4">
+                            <h5 class="modal-title" id="deleteRatingModalLabel-{{ $rating->id }}">Confirmar Exclusão</h5>
+                            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Fechar"></button>
+                        </div>
+                        <div class="modal-body">
+                            Tem certeza que deseja excluir esta avaliação?
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                            
+                            {{-- Formulário de exclusão (rota vazia por enquanto) --}}
+                            <form action="{{route('rate.destroy', ['rating'=>$rating->id])}}" method="POST">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="btn btn-danger">Excluir</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            {{-- Modal de Edição --}}
+            <div class="modal fade" id="editRatingModal-{{ $rating->id }}" tabindex="-1" aria-labelledby="editRatingModalLabel-{{ $rating->id }}" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        {{-- Ajuste a rota depois para a rota correta de atualização --}}
+                        <form method="POST" action="{{route('rate.update',['rating'=>$rating->id])}}">
+                            @csrf
+                            @method('PUT')
+
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="editRatingModalLabel-{{ $rating->id }}">Editar Avaliação</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+                            </div>
+
+                            <div class="modal-body">
+                                {{-- Estrelas --}}
+                                <div class="mb-3">
+                                    <label class="form-label">Nota</label>
+                                    <div class="d-flex flex-row-reverse justify-content-end">
+                                        @for($i = 10; $i >= 1; $i--)
+                                            @php
+                                                $value = $i / 2;
+                                            @endphp
+                                            <input 
+                                                type="radio" 
+                                                id="edit-star{{ $i }}-{{ $rating->id }}" 
+                                                name="rating" 
+                                                value="{{ $value }}" 
+                                                class="d-none"
+                                                @if($rating->rating == $value) checked @endif
+                                                required
+                                            >
+                                            <label for="edit-star{{ $i }}-{{ $rating->id }}" class="star">&#9733;</label>
+                                        @endfor
+                                    </div>
+                                </div>
+
+                                {{-- Comentário --}}
+                                <div class="mb-3">
+                                    <label for="edit-comment-{{ $rating->id }}" class="form-label">Comentário</label>
+                                    <textarea 
+                                        class="form-control" 
+                                        name="comment" 
+                                        id="edit-comment-{{ $rating->id }}" 
+                                        rows="3" 
+                                        maxlength="1000"
+                                    >{{ $rating->comment }}</textarea>
+                                </div>
+                            </div>
+
+                            <div class="modal-footer">
+                                <button type="submit" class="btn btn-success">Atualizar Avaliação</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            
         @empty
             <div class="alert alert-info" role="alert">
                 Nenhuma avaliação disponível para este filme.
             </div>
         @endforelse
+
 
     </div>
 </div>
