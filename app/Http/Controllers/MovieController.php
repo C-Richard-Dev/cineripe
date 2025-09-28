@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Services\TmdbService;
 use App\Models\Rating;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Http;
 
 class MovieController extends Controller
@@ -97,6 +98,7 @@ class MovieController extends Controller
         ]);
 
         $ratings = Rating::where('tmdb_id', $movie)->get();
+        $favoriteValidate = Auth::user()->favorites()->where('tmdb_id', $movie)->first();
 
         // if (!$res->successful()) {
         //     dd($res->status(), $res->body());
@@ -109,7 +111,7 @@ class MovieController extends Controller
 
         $movie = $res->json();
 
-        return view('pages.movies.details', compact('movie', 'ratings'));
+        return view('pages.movies.details', compact('movie', 'ratings', 'favoriteValidate'));
     }
 
     public function search(Request $request)

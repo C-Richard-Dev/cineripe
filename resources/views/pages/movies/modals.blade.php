@@ -36,3 +36,53 @@
 </div>
 
 
+{{-- Modal de Add aos Favoritos --}}
+<div class="modal fade" id="listModal-{{ $movie['id'] }}" tabindex="-1" aria-labelledby="listModalLabel-{{ $movie['id'] }}" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content border-0 shadow-lg rounded-4">
+            <div class="modal-header bg-success text-white rounded-top-4">
+                <h5 class="modal-title" id="listModalLabel-{{ $movie['id'] }}">Adicionar aos favoritos</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Fechar"></button>
+            </div>
+            <div class="modal-body">
+                Tem certeza que deseja adicionar este filme aos favoritos?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Melhor não</button>
+                
+                {{-- Formulário de exclusão (rota vazia por enquanto) --}}
+                <form action="{{route('favorite.store',['movie'=>$movie['id']])}}" method="POST">
+                    @csrf
+                    @method('POST')
+                    <button type="submit" class="btn btn-success">Sim. Adicionar!</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{{-- Modal para Remover dos Favoritos --}}
+<div class="modal fade" id="removeListModal-{{ $movie['id'] }}" tabindex="-1" aria-labelledby="removeListModalLabel-{{ $movie['id'] }}" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content border-0 shadow-lg rounded-4">
+            <div class="modal-header bg-danger text-white rounded-top-4">
+                <h5 class="modal-title" id="removeListModalLabel-{{ $movie['id'] }}">Remover dos favoritos</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Fechar"></button>
+            </div>
+            <div class="modal-body">
+                Tem certeza que deseja remover este filme dos favoritos?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Melhor não</button>
+                
+                {{-- Formulário de exclusão (rota vazia por enquanto) --}}
+                <form action="{{route('favorite.destroy',['movie'=>$movie['id']])}}" method="POST">
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit" class="btn btn-danger">Sim. Remover!</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+

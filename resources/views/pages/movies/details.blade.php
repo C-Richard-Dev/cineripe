@@ -94,10 +94,23 @@
             </div>
             {{-- Linha para os botões --}}
             <div class="d-flex justify-content mt-1">
-                {{-- Botão Adicionar à Lista --}}
-                <button class="btn btn-custom">
-                    <i class="bi bi-bookmark-plus"></i> Adicionar à lista
-                </button>
+                @if (Auth::check())
+                    @if (!$favoriteValidate)
+                        {{-- Botão Adicionar à Lista --}}
+                        <button data-bs-toggle="modal" data-bs-target="#listModal-{{ $movie['id'] }}" class="btn btn-custom">
+                            <i class="bi bi-bookmark-plus"></i> Adicionar aos favoritos
+                        </button>
+                    @else
+                        {{-- Remover --}}
+                        <button data-bs-toggle="modal" data-bs-target="#removeListModal-{{ $movie['id'] }}" class="btn btn-custom">
+                            <i class="bi bi-x-circle-fill"></i> Remover dos favoritos 
+                        </button>
+                    @endif
+                @else
+                    <a href="{{route('register')}}" class="btn btn-custom">
+                        <i class="bi bi-bookmark-plus"></i> Faça Login para adicionar á lista
+                    </a>
+                @endif
                 
                 {{-- Botão Ver Avaliações --}}
                 <button class="btn btn-custom">
@@ -138,8 +151,8 @@
             </div>
         @else
             <div>
-                <a href="" class="btn btn-primary mb-3">
-                    Crie uma conta para adicionar uma avaliação!
+                <a href="{{route('register')}}" class="btn btn-primary mb-3">
+                    Faça login para adicionar uma avaliação!
                 </a>
             </div>
         @endif

@@ -4,6 +4,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\MovieController;
 use App\Http\Controllers\RatingController;
+use App\Http\Controllers\FavoriteController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -37,6 +38,12 @@ Route::middleware('auth')->group(function () {
         Route::post('/rate/{movie}', [RatingController::class, 'store'])->name('rate.store'); // avalia um filme (usuários autenticados)
         Route::delete('/destroy/{rating}', [RatingController::class, 'destroy'])->name('rate.destroy'); // apaga avaliação
         Route::put('/update/{rating}', [RatingController::class, 'update'])->name('rate.update'); // edita avaliação
+    });
+
+    // Favoritos
+    Route::prefix('favorites')->group(function () {
+        Route::post('/store/{movie}', [FavoriteController::class, 'store'])->name('favorite.store');
+        Route::delete('/destroy/{movie}', [FavoriteController::class, 'destroy'])->name('favorite.destroy');
     });
     /**
      * Somente usuários do tipo Admin
