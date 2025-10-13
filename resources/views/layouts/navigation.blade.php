@@ -46,6 +46,7 @@
             <!-- Right Side -->
             <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                 @auth
+                <a href="{{route('favorite.index')}}" type="button" class="btn btn-outline-success">Favoritos</a>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle text-white bg-danger px-3 rounded" href="#" id="userDropdown" 
                            role="button" data-bs-toggle="dropdown" aria-expanded="false">

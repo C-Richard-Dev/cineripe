@@ -95,7 +95,7 @@
             {{-- Linha para os botões --}}
             <div class="d-flex justify-content mt-1">
                 @if (Auth::check())
-                    @if (!$favoriteValidate !== null)
+                    @if (!$favoriteValidate !== false)
                         {{-- Botão Adicionar à Lista --}}
                         <button data-bs-toggle="modal" data-bs-target="#listModal-{{ $movie['id'] }}" class="btn btn-custom">
                             <i class="bi bi-bookmark-plus"></i> Adicionar aos favoritos
@@ -113,9 +113,9 @@
                 @endif
                 
                 {{-- Botão Ver Avaliações --}}
-                <button class="btn btn-custom">
+                <a href="#ratings" class="btn btn-custom"> 
                     <i class="bi bi-chat-dots"></i> Ver Avaliações
-                </button>
+                </a>
             </div>
         </div>
     </div>
@@ -138,7 +138,7 @@
     @endif
 
     <div class="mt-5 text-center">
-        <div class="bg-white rounded-4 shadow-sm d-flex align-items-center justify-content-between p-3 mb-3">
+        <div id="ratings" class="bg-white rounded-4 shadow-sm d-flex align-items-center justify-content-between p-3 mb-3">
             <h1 class="text-dark mb-0">
                 Avaliações 
             </h1>

@@ -42,6 +42,7 @@ Route::middleware('auth')->group(function () {
 
     // Favoritos
     Route::prefix('favorites')->group(function () {
+        Route::get('/', [FavoriteController::class, 'index'])->name('favorite.index');
         Route::post('/store/{movie}', [FavoriteController::class, 'store'])->name('favorite.store');
         Route::delete('/destroy/{movie}', [FavoriteController::class, 'destroy'])->name('favorite.destroy');
     });

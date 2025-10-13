@@ -102,7 +102,7 @@ class MovieController extends Controller
         if (Auth::check()){
             $favoriteValidate = Auth::user()->favorites()->where('tmdb_id', $movie)->first();
         } else {
-            $favoriteValidate = null;
+            $favoriteValidate = false;
         }
 
         // if (!$res->successful()) {
