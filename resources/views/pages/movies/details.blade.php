@@ -95,7 +95,7 @@
             {{-- Linha para os botões --}}
             <div class="d-flex justify-content mt-1">
                 @if (Auth::check())
-                    @if (!$favoriteValidate)
+                    @if (!$favoriteValidate !== null)
                         {{-- Botão Adicionar à Lista --}}
                         <button data-bs-toggle="modal" data-bs-target="#listModal-{{ $movie['id'] }}" class="btn btn-custom">
                             <i class="bi bi-bookmark-plus"></i> Adicionar aos favoritos

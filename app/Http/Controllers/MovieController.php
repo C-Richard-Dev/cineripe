@@ -98,7 +98,12 @@ class MovieController extends Controller
         ]);
 
         $ratings = Rating::where('tmdb_id', $movie)->get();
-        $favoriteValidate = Auth::user()->favorites()->where('tmdb_id', $movie)->first();
+
+        if (Auth::check()){
+            $favoriteValidate = Auth::user()->favorites()->where('tmdb_id', $movie)->first();
+        } else {
+            $favoriteValidate = null;
+        }
 
         // if (!$res->successful()) {
         //     dd($res->status(), $res->body());
