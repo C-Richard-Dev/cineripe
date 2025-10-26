@@ -21,4 +21,8 @@ RUN php artisan config:clear && \
     php artisan route:clear && \
     php artisan view:clear
 
-CMD ["php-fpm"]
+# Expose the port Laravel will run on
+EXPOSE 10000
+
+# Run Laravel built-in server
+CMD php artisan serve --host=0.0.0.0 --port=${PORT:-10000}
