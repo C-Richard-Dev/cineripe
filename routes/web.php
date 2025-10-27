@@ -19,6 +19,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', [MovieController::class, 'index'])->name('home');
+Route::get('/health', fn() => response('OK', 200));
 
 /**
  * Gerenciamento de Filmes
